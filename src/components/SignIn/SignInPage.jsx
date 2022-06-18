@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from "./Header";
 import Input from "../Input";
 import Button from "../Button";
@@ -10,10 +10,15 @@ import { useNavigate } from "react-router-dom";
 import {auth} from "../../firebase";
 
 const SignInPage = () => {
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (auth.currentUser){
+            navigate('/home')
+        }
+    }, [])
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
-    const navigate = useNavigate()
     const signIn = async () => {
         setLoading(true)
         if (email && password ){
