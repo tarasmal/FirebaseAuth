@@ -11,14 +11,15 @@ import {auth} from "../../firebase";
 
 const SignInPage = () => {
     const navigate = useNavigate()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false)
+
     useEffect(() => {
         if (auth.currentUser){
             navigate('/home')
         }
-    }, [])
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [loading, setLoading] = useState(false)
+    })
     const signIn = async () => {
         setLoading(true)
         if (email && password ){
@@ -35,6 +36,7 @@ const SignInPage = () => {
             alert('Fill all fields!')
         }
     }
+
     return (
         <div className={'row'}>
             <div className={'col'}></div>
