@@ -4,7 +4,7 @@ import Input from "../Input";
 import Button from "../Button";
 import {Link} from "react-router-dom";
 import LoaderSpinner from "../LoaderSpinner/LoaderSpinner";
-import {signInWithEmailAndPassword} from 'firebase/auth'
+import {signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth'
 import { useNavigate } from "react-router-dom";
 
 import {auth} from "../../firebase";
@@ -16,10 +16,12 @@ const SignInPage = () => {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        if (auth.currentUser){
-            navigate('/home')
-        }
-    })
+        onAuthStateChanged(auth, user => {
+            if (user){
+                navigate('/home')
+            }
+        })
+    }, [])
     const signIn = async () => {
         setLoading(true)
         if (email && password ){
